@@ -12,8 +12,9 @@ public class HelloWorld extends Activity implements View.OnClickListener {
     public void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        LinearLayout myLayout = new LinearLayout(this);
-        setContentView(myLayout);
+        setContentView(R.layout.hello_layout);
+        //LinearLayout myLayout = new LinearLayout(this);
+        LinearLayout myLayout = (LinearLayout)findViewById(R.id.hello_layout);
         HelloView myView = new HelloView(this);
         myView.setOnClickListener(this);
         myLayout.addView(myView);

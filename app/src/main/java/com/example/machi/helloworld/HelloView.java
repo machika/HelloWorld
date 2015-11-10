@@ -8,30 +8,22 @@ import android.graphics.Point;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.Display;
+import android.widget.LinearLayout;
 
 import java.util.GregorianCalendar;
 import java.util.Random;
 
 public class HelloView extends View {
 
-    private int myX, myY, myRadius, myRed, myGreen, myBlue;
-    public int myColor;
+    private float myX, myY;
+    private int myRadius, myRed, myGreen, myBlue;
+    private int myColor;
+    private boolean bInit;
 
     public HelloView(Context context) {
         super(context);
         setBackgroundColor(Color.WHITE);
-        WindowManager wm = (WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE);
-        Display disp = wm.getDefaultDisplay();
-        Point dispSize = new Point();
-        disp.getSize(dispSize);
-
-        myX = dispSize.x / 2;
-        myY = dispSize.y / 2;
-        myRadius = (myY > myX) ? myY / 3 : myX / 3;
-        myRed = 0;
-        myGreen = 0;
-        myBlue = 255;
-        myColor = Color.rgb(myRed, myGreen, myBlue);
+        bInit = false;
     }
 
     public void ChangeColor() {
@@ -46,6 +38,17 @@ public class HelloView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        if (!bInit) {
+            myX = (getRight() - getLeft()) / (float)2.0;
+            myY = (getBottom() - getTop()) / (float)2.0;
+            myRadius = (int)((myY > myX) ? myY / (float)3 : myX / (float)3);
+            myRed = 0;
+            myGreen = 0;
+            myBlue = 255;
+            myColor = Color.rgb(myRed, myGreen, myBlue);
+            bInit = true;
+        }
+
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStrokeWidth(10);
